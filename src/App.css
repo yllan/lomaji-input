@@ -1,0 +1,38 @@
+#root {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#input-buffer {
+  background-color: lightgoldenrodyellow;
+  min-height: 30pt;
+  margin: 1rem;
+  padding: 4pt;
+  font-size: 18pt;
+  white-space: pre;
+}
+
+.lomaji-complete {
+  color: darkcyan;
+}
+
+.lomaji-incomplete {
+  color: darkred;
+}
+
+.symbol {
+  color: darkblue;
+}
+
+.ibeam {
+  width: 1px;
+  border: 1px solid black;
+  animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+  to {
+      visibility: hidden;
+  }
+}
