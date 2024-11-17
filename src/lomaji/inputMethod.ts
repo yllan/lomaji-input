@@ -7,6 +7,7 @@ import {
   VALID_LOMAJI_CHARACTERS,
   VALID_TONE_CHARACTERS,
   VALID_VOWEL_CHARACTERS,
+  textualRepresentation,
 } from "./lomaji";
 
 type Range = {
@@ -31,10 +32,10 @@ export const inputMethod = (
   state: InputState,
   e: KeyboardEvent,
 ): [InputState, string] => {
-  const { marked, range } = state;
+  const { marked, range } = state
 
   if (e.key.length === 1) {
-    let k = e.key.toLowerCase();
+    let k = e.key.toLowerCase()
 
     if (!isEmptyRange(range)) {
       // replace it
@@ -46,7 +47,7 @@ export const inputMethod = (
           range: emptyRangeAt(range.start + 1),
         },
         "",
-      ];
+      ]
     }
 
     if (
@@ -68,13 +69,13 @@ export const inputMethod = (
           },
           "",
         ];
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
         // can't push to current lomaji. create new one
         const j =
           INITIAL_CHARACTERS.has(k) || VALID_VOWEL_CHARACTERS.has(k)
-            ? newLomaji(k)
-            : newSymbol(k);
+            ? newLomaji(e.key)
+            : newSymbol(e.key)
 
         return [
           {
@@ -82,13 +83,13 @@ export const inputMethod = (
             range: emptyRangeAt(range.start + 1),
           },
           "",
-        ];
+        ]
       }
     } else {
       const j =
         INITIAL_CHARACTERS.has(k) || VALID_VOWEL_CHARACTERS.has(k)
-          ? newLomaji(k)
-          : newSymbol(k);
+          ? newLomaji(e.key)
+          : newSymbol(e.key)
 
       return [
         {
@@ -96,7 +97,7 @@ export const inputMethod = (
           range: emptyRangeAt(range.start + 1),
         },
         "",
-      ];
+      ]
     }
   } else if (e.key === "ArrowLeft") {
     if (!isEmptyRange(range)) {
@@ -106,7 +107,7 @@ export const inputMethod = (
           range: emptyRangeAt(range.start),
         },
         "",
-      ];
+      ]
     } else {
       return [
         {
@@ -114,7 +115,7 @@ export const inputMethod = (
           range: emptyRangeAt(Math.max(0, range.start - 1)),
         },
         "",
-      ];
+      ]
     }
   } else if (e.key === "ArrowRight") {
     if (!isEmptyRange(range)) {
@@ -124,7 +125,7 @@ export const inputMethod = (
           range: emptyRangeAt(range.end),
         },
         "",
-      ];
+      ]
     } else {
       return [
         {
@@ -132,7 +133,7 @@ export const inputMethod = (
           range: emptyRangeAt(Math.min(marked.length, range.start + 1)),
         },
         "",
-      ];
+      ]
     }
   } else if (e.key === "Backspace") {
     if (!isEmptyRange(range)) {
@@ -142,7 +143,7 @@ export const inputMethod = (
           range: emptyRangeAt(range.start),
         },
         "",
-      ];
+      ]
     } else if (range.start > 0) {
       return [
         {
@@ -152,8 +153,17 @@ export const inputMethod = (
           range: emptyRangeAt(range.start - 1),
         },
         "",
-      ];
+      ]
     }
+  } else if (e.key === "Enter") {
+    return [
+      {
+        marked: [],
+        range: { start: 0, end: 0 },
+      },
+      marked.map(textualRepresentation).join('')
+    ]
+
   }
   return [state, ""];
-};
+}

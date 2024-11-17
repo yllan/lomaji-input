@@ -11,7 +11,7 @@ function App() {
   const jiClass = (ji: Ji): string => {
     switch (ji.type) {
       case "lomaji":
-        if (ji.initial && ji.vowel && ji.tone) {
+        if (ji.initial !== undefined && ji.vowel !== undefined && ji.tone !== undefined) {
           return "lomaji-complete"
         } else {
           return "lomaji-incomplete"
@@ -24,14 +24,15 @@ function App() {
   }
 
   const handleKeyDown = (e: KeyboardEvent) => {
+    console.log(e.key, e.shiftKey)
     const [newState, output] = inputMethod(
       { marked: marked(), range: range() },
       e,
-    );
-    setMarked(newState.marked);
-    setRange(newState.range);
+    )
+    setMarked(newState.marked)
+    setRange(newState.range)
 
-    console.log(marked());
+    console.log(marked(), output)
     // ignore output so far
   };
 
