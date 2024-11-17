@@ -32,7 +32,9 @@ function App() {
     setMarked(newState.marked)
     setRange(newState.range)
 
-    console.log(marked(), output)
+    if (output.length > 0) {
+      navigator.clipboard.writeText(output)
+    }
     // ignore output so far
   };
 
