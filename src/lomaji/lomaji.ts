@@ -1,6 +1,6 @@
 /* Constants */
 export const VALID_LOMAJI_CHARACTERS = new Set([..."abceghijklmnoprstu"]);
-export const VALID_TONE_CHARACTERS = new Set([..."12356789"]);
+export const VALID_TONE_CHARACTERS = new Set([..."123456789"]);
 export const VALID_VOWEL_CHARACTERS = new Set([..."aeiou"]);
 export const INITIAL_CHARACTERS = new Set([..."pbtnlkghsjmc"]);
 const NON_PTKH_TONES = new Set([1, 2, 3, 5, 6, 7, 9]);
